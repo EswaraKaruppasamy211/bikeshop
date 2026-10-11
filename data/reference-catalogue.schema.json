@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Source-traceable motorcycle reference catalogue",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["models", "parts"],
+  "properties": {
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "manufacturer", "model", "discontinued", "outsidePeriod", "source"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "manufacturer": { "type": "string", "minLength": 1 },
+          "model": { "type": "string", "minLength": 1 },
+          "engineCapacityApprox": { "type": "string" },
+          "notes": { "type": "string" },
+          "discontinued": { "type": "boolean" },
+          "outsidePeriod": { "type": "boolean" },
+          "source": { "$ref": "#/$defs/source" }
+        }
+      }
+    },
+    "parts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "partName", "category", "vehicleCategory", "fitmentNotes", "models", "source"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "partName": { "type": "string", "minLength": 1 },
+          "category": { "type": "string", "minLength": 1 },
+          "vehicleCategory": { "type": "string", "minLength": 1 },
+          "fitmentNotes": { "type": ["string", "null"] },
+          "models": { "type": "array", "items": { "type": "string" } },
+          "source": { "$ref": "#/$defs/source" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document"],
+      "properties": {
+        "document": { "type": "string", "minLength": 1 },
+        "page": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}
